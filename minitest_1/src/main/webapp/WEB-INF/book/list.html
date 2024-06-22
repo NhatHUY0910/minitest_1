@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout.html::head">
+    <meta charset="UTF-8">
+    <title>List Book</title>
+</head>
+<body>
+
+    <h3>Book List</h3>
+    <p><a th:href="@{/books/create}">Add New Book</a></p>
+    <p><a th:href="@{/categories}">Category List</a></p>
+    <p><a th:href="@{/categories/book-counts}">Category Book List</a></p>
+
+    <div style="margin-bottom: 10px; margin-left: 50px">
+        <form th:action="@{/books}" method="get">
+            <label><input type="text" name="search" th:value="${search}"></label>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <div class="notify">
+        <div th:if="${message}"><span th:text="${message}"></span></div>
+    </div>
+
+    <table id = "books">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Image</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b,bStatus : ${books}">
+            <td th:text="${bStatus.count}"></td>
+            <td th:text="${b.getName()}"></td>
+            <td th:text="${b.getAuthor()}"></td>
+            <td th:text="${b.getPrice()}"></td>
+            <td th:text="${b.getCategory().getName()}"></td>
+            <td><img width="100" height="100" th:src="@{/image/{imageName}(imageName=${b.image})}" alt="image"></td>
+            <td><a th:href="@{/books/update/{id}(id=${b.getId()})}">Update</a></td>
+            <td><a th:href="@{/books/delete/{id}(id=${b.getId()})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" th:if="${books.hasPrevious()}"
+       th:href="@{/books(page=${books.number - 1}, search=${search})}">Previous</a>
+
+    <span th:text="${books.number + 1}"></span> | <span th:text="${books.totalPages}"></span>
+
+    <a class="btn btn-primary" th:if="${books.hasNext()}"
+       th:href="@{/books(page=${books.number + 1}, search=${search})}">Next</a>
+
+    <footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout.html::head">
+    <meta charset="UTF-8">
+    <title>Category List</title>
+</head>
+<body>
+
+    <h3>Category List</h3>
+
+    <p><a th:href="@{/categories/create}">Add New Category</a></p>
+    <p><a th:href="@{/categories/book-counts}">Category Book List</a></p>
+    <p><a th:href="@{/books}">Back To Book List</a></p>
+
+    <div class="notify">
+        <div th:if="${message}"><span th:text="${message}"></span></div>
+    </div>
+
+    <table id = "books">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c, cStatus : ${categories}">
+                <td th:text="${cStatus.count}"></td>
+                <td th:text="${c.getName()}"></td>
+                <td><a th:href="@{/categories/delete/{id}(id=${c.getId()})}">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

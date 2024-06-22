@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout.html::head">
+    <meta charset="UTF-8">
+    <title>Category Book Number</title>
+</head>
+<body>
+
+    <h3>Category Book Counts</h3>
+    <p><a th:href="@{/books}">Back to Book List</a></p>
+    <p><a th:href="@{/categories}">Back to Category List</a></p>
+
+    <table id="books">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Category</th>
+            <th>Book Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="count, iterStat : ${categoryBookNumber}">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text="${count.category}"></td>
+            <td th:text="${count.bookNumber}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <footer th:replace="/layout :: footer"></footer>
+
+</body>
+</html>

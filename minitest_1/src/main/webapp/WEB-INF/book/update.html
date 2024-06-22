@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout.html::head">
+    <meta charset="UTF-8">
+    <title>Update Book</title>
+    <style>
+        span.message-error{
+            color: red;
+            display: block;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Update Book Form</h3>
+    <p><a th:href="@{/books}">Back To Book List</a></p>
+
+    <div id="form">
+        <form th:action="@{/books/update/{id}(id=${book.getId()})}" th:object="${book}"
+              method="post" novalidate="novalidate">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="message-error"></span>
+            </div>
+            <div>
+                <label for="author">Author:</label>
+                <input type="text" id="author" th:field="*{author}"/>
+                <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="message-error"></span>
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" step="0.01" id="price" th:field="*{price}"/>
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="message-error"></span>
+            </div>
+            <div>
+                <label for="category">Category</label>
+                <select id="category" th:field="*{category}">
+                    <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+            </div>
+            <div>
+                <label for="image">Image</label>
+                <input type="file" id="image" th:field="*{image}"/>
+            </div>
+            <input type="submit" value="Save"/>
+        </form>
+    </div>
+
+    <footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
